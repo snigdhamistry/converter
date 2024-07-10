@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1 id="my">My Converter</h1>
+    <form>
+        <label> Enter a decimal number : <input type="text" placeholder="Enter a decimal number" id="decimal"></label>
+
+        <select id="select">
+            <option disabled selected>Select a method for conversion</option>
+            <option value="bionary">decimal to bionary</option>
+            <option value="octal"> decimal to octal </option>
+            <option value="hexadecimal">decimal to hexadecimal</option>
+        </select>
+
+        <button>calculate</button>
+
+        <div id="result"></div>
+    </form>
+</body>
+
+<script>
+    const form = document.querySelector("form")
+    const decimal = document.querySelector('#decimal')
+    const selector = document.querySelector('#select')
+    const result = document.querySelector('#result')
+    let optionSelected;
+    let ans;
+    selector.addEventListener('change', function (e) {
+        if (decimal.value === '' || decimal.value <= 0 || isNaN(decimal.value)) {
+            result.innerHTML = 'please give me a number not a string';
+        }
+        else {
+            optionSelected = e.target.value
+            if (optionSelected === "bionary") {
+                ans = '';
+                let num = parseInt(decimal.value);
+                while (num > 0) {
+                    let priorityDigit = num % 2;
+                    ans = priorityDigit + ans;
+                    num = Math.floor(num / 2);
+                }
+            }
+            else if (optionSelected === "octal") {
+                ans = '';
+                let num = parseInt(decimal.value);
+                while (num > 0) {
+                    let priorityDigit = num % 8;
+                    ans = priorityDigit + ans;
+                    num = Math.floor(num / 8);
+                }
+            }
+            else {
+                ans = '';
+                let num = parseInt(decimal.value);
+                while (num > 0) {
+                    let priorityDigit = num % 16;
+                    ans = priorityDigit + ans;
+                    num = Math.floor(num / 16);
+                }
+            }
+        }
+    }
+    )
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (optionSelected === "bionary") {
+            result.innerHTML = `Binary equivalent: ${ans}`;
+        }
+        else if ((optionSelected === "octal")) {
+            result.innerHTML = `octal equivalent: ${ans}`
+        }
+        else {
+            result.innerHTML = `hexadecimal equivalent:${ans}`
+        }
+    })
+</script>
+
+</html>
+
+</html>
